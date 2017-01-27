@@ -51,9 +51,9 @@ public class BaseIgniteExample {
 			}
 			LOG.info("Using data file: " + dataFile);
 
-			//			List<LogEntry> logEntries = readLogEntries(dataFile);
+			List<LogEntry> logEntries = readLogEntries(dataFile);
 			LOG.info("Http logs readed from file " + dataFile);
-			//			Map<String, IpStats> ipStatistic = calculateStatistics(logEntries);
+			Map<String, IpStats> ipStatistic = calculateStatistics(logEntries);
 			LOG.info("Statistic calculated");
 
 			this.ignite = getIgnite();
@@ -61,16 +61,15 @@ public class BaseIgniteExample {
 			this.cache = ignite.getOrCreateCache(CACHE_NAME);
 			LOG.info("Got Ignite cache");
 
-			//			putStatisticsInCache(ipStatistic);
+			putStatisticsInCache(ipStatistic);
 			LOG.info("IpStatistic is in cache");
-			//			validate(ipStatistic);
+			validate(ipStatistic);
 			LOG.info("Validation succeeded.");
 
-			
 			createReporter().printReport();
 
-			//cache.destroy();
-			//cache.close();
+			cache.destroy();
+			cache.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -80,14 +79,11 @@ public class BaseIgniteExample {
 		}
 	}
 
-	
-	
 	private BaseReporter createReporter() throws Exception {
 		Constructor<? extends BaseReporter> ctor = reporterClass.getConstructor(IgniteCache.class);
 		return ctor.newInstance(cache);
 	}
 
-	
 	@SuppressWarnings("unused")
 	private void validate(Map<String, IpStats> ipStatistic) throws Exception {
 		// iterate through local cache

@@ -1,18 +1,11 @@
 package ignite;
 
-import ignite.reporter.BaseReporter;
 import ignite.reporter.SimpleReporter;
 
-public class SimpleIgniteExample extends BaseIgniteExample{
-
-	public SimpleIgniteExample(Class<? extends BaseReporter> reporterClass) {
-		super(reporterClass);
-	}
+public class SimpleIgniteExample {
 
 	public static void main(String[] args) throws Exception {
-		new SimpleIgniteExample(SimpleReporter.class).run(args);
+		new BaseIgniteExample(SimpleReporter.class).run(args);
 	}
-
-
 
 }
